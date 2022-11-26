@@ -1,2 +1,2 @@
-# JUPI.AI
+# JUPIK.AI
 AI memes page
