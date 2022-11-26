@@ -37,18 +37,26 @@
 <style lang="scss" scoped>
   .post{
     border:2px dashed red;
+    height:100vh;
     position: relative;
-  }
-  .content{
-    border:2px dashed yellow;
-  }
+    .content{
+      border:2px dashed yellow;
+      position:absolute;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content: center;
+      align-items: center;
 
-  .desc{
-    position: absolute;
-    border:2px dashed green;
-    bottom:0;
-    width:100%;
+    }
 
+    .desc{
+      position: absolute;
+      border:2px dashed green;
+      bottom:0;
+      width:100%;
+
+    }
   }
 
 
