@@ -1,2 +1,2 @@
-# Jupiter
+# JUPI.AI
 AI memes page
