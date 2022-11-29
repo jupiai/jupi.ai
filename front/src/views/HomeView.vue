@@ -2,8 +2,6 @@
   import { defineComponent } from "vue";
   import services from ".././services";
 
-  let isScrollingTrigger: Boolean, lastScrollY : number;
-
   interface Post {
     title: string,
     author: string,
@@ -13,53 +11,42 @@
   export default defineComponent({
     data() {
       return {
-        posts : [] as Post[]
+        posts : [] as Post[],
+        index : 0,
+        touchStartPoint: 0,
       }
     },
     methods : {
-
-      tiktokScrolling ( e : Event ) {
-        if(isScrollingTrigger){ return }
-        e.preventDefault()
-        console.log('scrolling')
-        isScrollingTrigger = true
-
-        let times = Math.round( ( scrollY + innerHeight ) / innerHeight )
-        if(lastScrollY > scrollY ){
-          times = Math.round( ( scrollY - innerHeight ) / innerHeight )
-        }
-
-        lastScrollY = times * innerHeight
-        window.scrollTo(0, lastScrollY)
-        console.log({ times, innerHeight, scrollY,  scrollingTo: times * innerHeight , e })
-
-        setTimeout(() => {    
-            console.log('end of scrolling')
-            isScrollingTrigger = false
-          }, 500);
-      // })
-      },
-
       async loadPosts () {
         const res: Post[] = await services.get('posts')
         this.posts.push( ...res )
-      }
-      
+      },
+      smartScrolling ( e : WheelEvent | TouchEvent) {
+        let direction = 0;
+        if( e.constructor === TouchEvent ){
+          if(!this.touchStartPoint){ return }
+          direction = this.touchStartPoint - e.touches[0].clientY
+        }else if( e.constructor === WheelEvent ){
+          direction = e.deltaY
+        }
+        this.touchStartPoint = 0
+        this.index = direction > 0 ? ++this.index : --this.index;
+        window.scrollTo(0,  this.index * innerHeight)
+      },
+      touchStart(e: TouchEvent){
+        this.touchStartPoint = e.touches[0].clientY
+      },
     },
     mounted () {
-
-      window.removeEventListener('scroll', this.tiktokScrolling)
-      window.addEventListener('scroll', this.tiktokScrolling)
-
       this.loadPosts()
-
     }
   })
 </script>
 
 <template>
-  <main>
-    <div v-for="post of posts" class="post">
+  <main @wheel.prevent="smartScrolling" @touchmove.prevent="smartScrolling" @touchstart.prevent="touchStart">
+    <loading v-if="(posts.length === 0)" class="loadingWrapper" />
+    <div v-else v-for="post of posts" class="post">
       <div class="content">
         <img :src="post.image_src" :alt="post.title">
       </div>
@@ -94,4 +81,10 @@
 
     }
   }
-</style>
+  .loadingWrapper{
+    height:100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style> 
