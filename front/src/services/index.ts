@@ -1,23 +1,21 @@
 import axios from "axios"
 
-const proxy = "https://proxy.cors.sh/"
+const prod = {
+  origin: "https://proxy.cors.sh/" + "http://54.38.52.169:8080",
+  headers: {
+    "origin" : "https://yippieai.github.io"
+  }
+}
 
-// const proxy = "https://thingproxy.freeboard.io/fetch/"
-// const local = proxy + "http://127.0.0.1:3300"
-const local = "http://127.0.0.1:3300"
-const prod = proxy + "http://54.38.52.169:8080"
-// const host = import.meta.env.VITE_ENV === 'local' ? local : prod;
-const host = ['127.0.0.1', 'localhost'].includes(location.hostname) ? local : prod;
-// const host = prod;
+const local = {
+  origin : "http://127.0.0.1:3300",
+  headers : { }
+}
 
-console.log( { host } )
+const { origin, headers } = ['127.0.0.1', 'localhost'].includes(location.hostname) ? local : prod;
 
 export default {
   get: async ( url: string ) => {
-    return ( await axios.get( host + '/api/' + url, {
-      headers : {
-        "origin" : "https://yippieai.github.io"
-      }
-    } ) ).data
+    return ( await axios.get( origin + '/api/' + url, { headers } ) ).data
   } 
 }

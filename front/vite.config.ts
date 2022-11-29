@@ -12,6 +12,7 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  // ! not woking with github.io
   // build: {
   //   outDir: "../back/resources/"
   // }
