@@ -6,7 +6,7 @@ AI memes page
 ## Back
 Run:
 ```bash
-php artisan serve --port=80
+php artisan serve --port=3300
 ```
 
 Deploy:
