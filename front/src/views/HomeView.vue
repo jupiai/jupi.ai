@@ -8,6 +8,13 @@
     image_src: string
   }
 
+  const appHeight = () => {
+      const doc = document.documentElement
+      doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+  }
+  window.addEventListener('resize', appHeight)
+  appHeight()
+
   export default defineComponent({
     data() {
       return {
@@ -61,7 +68,12 @@
 <style lang="scss" scoped>
   .post{
     border:10px groove blue;
-    height:100vh;
+    // height:100vh;
+    // min-height:fill-avalible;
+    // min-height: -webkit-fill-available;
+    height: var(--app-height);
+
+
     position: relative;
     .content{
       border:2px dashed yellow;
