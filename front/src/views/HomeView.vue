@@ -97,25 +97,29 @@
 </template>
 
 <style lang="scss" scoped>
+main{
   .post{
-    border:10px groove blue;
+    border-radius:5px;
+    background-color: var(--vt-c-black-mute);
     height: var(--app-height);
     position: relative;
+    border:5px solid var(--color-background);
+    // border:5px solid red;
     .content{
-      border:2px dashed yellow;
       position:absolute;
       width:100%;
       height:100%;
       display:flex;
       justify-content: center;
       align-items: center;
-
     }
     .desc{
       position: absolute;
-      border:2px dashed green;
       bottom:0;
       width:100%;
+      padding:1rem;
+      line-height: 1.5rem;
+      background-color: var(--vt-c-black-soft);
 
     }
   }
@@ -125,7 +129,6 @@
     justify-content: center;
     align-items: center;
   }
-
   .postsLoading{
     display:flex;
     justify-content: center;
@@ -142,5 +145,5 @@
       opacity:1;
     }
   }
-
+}
 </style> 
