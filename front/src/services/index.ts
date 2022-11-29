@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-const proxy = "https://proxy.cors.sh/"
+const proxy = "https://thingproxy.freeboard.io/fetch/"
 const local = "http://127.0.0.1:3300"
 const prod = proxy + "http://54.38.52.169:8080"
 // const host = import.meta.env.VITE_ENV === 'local' ? local : prod;
