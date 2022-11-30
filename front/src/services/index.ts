@@ -1,7 +1,8 @@
 import axios from "axios"
 
 const prod = {
-  origin: "https://proxy.cors.sh/" + "http://54.38.52.169:8080",
+  // origin: "https://proxy.cors.sh/" + "http://54.38.52.169:8080",
+  origin: "https://yippie.webions.uk",
   headers: {
     "origin" : "https://yippieai.github.io"
   }
