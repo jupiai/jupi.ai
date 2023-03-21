@@ -1,5 +1,7 @@
 import axios from "axios"
 
+
+
 const prod = {
   // origin: "https://proxy.cors.sh/" + "http://54.38.52.169:8080",
   origin: "https://yippie.webions.uk",
@@ -21,7 +23,8 @@ const { origin, headers } = ['127.0.0.1', 'localhost'].includes(location.hostnam
 //   } 
 // }
 
-export default defineNuxtPlugin((/* nuxtApp */) => {
+// export default defineNuxtPlugin((/* nuxtApp */) => {
+export default (/* nuxtApp */) => {
   return { provide: {
     services: {
       get: async ( url: string ) => {
@@ -31,4 +34,5 @@ export default defineNuxtPlugin((/* nuxtApp */) => {
     }
 
   }}
-})
+// })
+}
