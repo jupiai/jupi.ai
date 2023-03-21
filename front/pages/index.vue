@@ -1,6 +1,7 @@
 <script lang="ts">
   import { defineComponent } from "vue";
-  import services from ".././services";
+  // import services from ".././services";
+  declare var window: any;
 
   interface Post {
     title: string,
@@ -9,12 +10,13 @@
   }
 
   // set postheight
-  const appHeight = () => {
-      const doc = document.documentElement
-      doc.style.setProperty('--app-height', `${window.innerHeight}px`)
-  }
-  window.addEventListener('resize', appHeight)
-  appHeight()
+  // const appHeight = () => {
+  //     const doc = document.documentElement
+  //     // doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+  //     doc.style.setProperty('--app-height', `${window.innerHeight}px`)
+  // }
+  // window.addEventListener('resize', appHeight)
+  // appHeight()
 
   export default defineComponent({
     data() {
@@ -33,7 +35,8 @@
         this.index = this.posts.length 
         setTimeout( async ()=>{ 
           window.scrollTo(0,  document.body.scrollHeight) 
-          this.posts.push( ...await services.get('posts') )
+          // this.posts.push( ...await services.get('posts') )
+          this.posts.push( ...await  this.$services.get('posts') )
           setTimeout(()=>{ 
             window.scrollTo(0,  this.index * innerHeight) 
             this.bottomExhoust = false      
@@ -44,7 +47,8 @@
         if(this.topExhoust){ return }
         this.index = 0
         this.topExhoust = true
-        this.posts = await services.get('posts')
+        // this.posts = await services.get('posts')
+        this.posts = await this.$services.get('posts')
         this.topExhoust = false
       },
       smartScrolling ( e : WheelEvent | TouchEvent) {
@@ -74,26 +78,29 @@
       },
     },
     async mounted () {
-      this.posts.push( ...await services.get('posts') )
+      // this.posts.push( ...await services.get('posts') )
+      this.posts.push( ...await this.$services.get('posts') )
     }
   })
 </script>
 
 <template>
-  <main @wheel.prevent="smartScrolling" @touchmove.prevent="smartScrolling" @touchstart.prevent="touchStart">
-    <loading class="postsLoading" :class="{ active: topExhoust }" />
-    <loading v-if="posts.length === 0" class="loadingWrapper" />
-    <div v-else v-for="post of posts" class="post">
-      <div class="content">
-        <img :src="post.image_src" :alt="post.title">
+  <div>
+    <main @wheel.prevent="smartScrolling" @touchmove.prevent="smartScrolling" @touchstart.prevent="touchStart">
+      <loading class="postsLoading" :class="{ active: topExhoust }" />
+      <loading v-if="posts.length === 0" class="loadingWrapper" />
+      <div v-else v-for="post of posts" class="post" :key="post.title">
+        <div class="content">
+          <img :src="post.image_src" :alt="post.title">
+        </div>
+        <div class="desc">
+          <h2>{{ post.title }}</h2>
+          <p>{{ post.author }}</p>
+        </div>
       </div>
-      <div class="desc">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.author }}</p>
-      </div>
-    </div>
-    <loading class="postsLoading" :class="{ active: bottomExhoust }" />
-  </main>
+      <loading class="postsLoading" :class="{ active: bottomExhoust }" />
+    </main>
+  </div>
 </template>
 
 <style lang="scss" scoped>

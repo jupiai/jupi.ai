@@ -15,8 +15,20 @@ const local = {
 
 const { origin, headers } = ['127.0.0.1', 'localhost'].includes(location.hostname) ? local : prod;
 
-export default {
-  get: async ( url: string ) => {
-    return ( await axios.get( origin + '/api/' + url, { headers } ) ).data
-  } 
-}
+// export default {
+//   get: async ( url: string ) => {
+//     return ( await axios.get( origin + '/api/' + url, { headers } ) ).data
+//   } 
+// }
+
+export default defineNuxtPlugin((/* nuxtApp */) => {
+  return { provide: {
+    services: {
+      get: async ( url: string ) => {
+        return ( await axios.get( origin + '/api/' + url, { headers } ) ).data
+      } 
+
+    }
+
+  }}
+})
