@@ -102,8 +102,6 @@
     </main>
     <section class="discusions">
       <h3>Comments</h3>
-      sectionm
-
       <div v-for="comment of ['good', 'bad', 'simple', 'awful']" :key="comment">
         <p>
           {{  comment  }}
