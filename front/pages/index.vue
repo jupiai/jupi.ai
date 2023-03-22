@@ -85,7 +85,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="overMain">
     <main @wheel.prevent="smartScrolling" @touchmove.prevent="smartScrolling" @touchstart.prevent="touchStart">
       <loading class="postsLoading" :class="{ active: topExhoust }" />
       <loading v-if="posts.length === 0" class="loadingWrapper" />
@@ -100,6 +100,16 @@
       </div>
       <loading class="postsLoading" :class="{ active: bottomExhoust }" />
     </main>
+    <section class="discusions">
+      <h3>Comments</h3>
+      sectionm
+
+      <div v-for="comment of ['good', 'bad', 'simple', 'awful']" :key="comment">
+        <p>
+          {{  comment  }}
+        </p>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -150,6 +160,25 @@ main{
       height:unset;
       padding:1rem;
       opacity:1;
+    }
+  }
+  .discusions{
+    border:2px dashed blue;
+    display:none; // show on click
+
+  }
+}
+
+@media( min-width: 768px){
+.overMain{
+    display:flex;
+    main{
+      border:2px dashed red;
+      flex:3;
+    }
+    .discusions{
+      border:2px dashed blue;
+      flex:1;
     }
   }
 }
